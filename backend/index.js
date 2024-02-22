@@ -43,6 +43,9 @@ const app = express();
 // connect db
 // if there is an error
 // ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'kavi123';
+
+// middleware for accept client input to express server
+app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -84,11 +87,15 @@ process.on("SIGINT", () => {
 //add books
 app.post("/books", (req,res)=>{
     const q = "INSERT INTO books (`title`,`desc`,`cover`) VALUES (?)";
-    const values = ["title fromm backend","desc from backend","cover pic from backend"];
+    const values = [
+        req.body.title,
+        req.body.desc,
+        req.body.cover,
+    ];
 
     db.query(q, [values], (err,data) =>{
         if (err) return res.json(err);
-        return res.json(data);
+        return res.json("book has been created succesfully");
     })
 })
 
