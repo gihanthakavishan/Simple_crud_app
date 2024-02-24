@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Await, Link } from 'react-router-dom';
 
 const Books = () => {
     const [books,setBooks] = useState([]);
@@ -18,6 +18,15 @@ const Books = () => {
       }
       fetAllBooks();
     },[]);
+
+    const handleDelete = async (id) =>{
+        try {
+            await axios.delete("http://localhost:8800/books/"+id);
+            window.location.reload();
+        } catch (err) {
+           console.log(err); 
+        }
+    }
   return (
     <div>
         <h1>Wisdom Books</h1>
@@ -28,7 +37,7 @@ const Books = () => {
                      <h2>{book.title}</h2>
                      <p>{book.desc}</p>
                      <span>{book.price}</span>
-                     <button className='delete'>Delete</button>
+                     <button className='delete' onClick={()=>handleDelete(book.id)}>Delete</button>
                      <button className='update'>Update</button>
                  </div>
 

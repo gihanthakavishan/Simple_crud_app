@@ -100,7 +100,18 @@ app.post("/books", (req,res)=>{
     db.query(q, [values], (err,data) =>{
         if (err) return res.json(err);
         return res.json("book has been created succesfully");
-    })
+    });
+});
+
+// delete book
+app.delete("/books/:id", (req,res)=>{
+  const bookId = req.params.id;
+  const q = "DELETE FROM books WHERE id = ?"
+
+  db.query(q, [bookId], (err, data) =>{
+    if (err) return res.json(err);
+    return res.json("book has been deleted succesfully");
+  })
 })
 
 app.listen(8800, () => {
