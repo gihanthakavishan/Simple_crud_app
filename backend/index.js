@@ -111,8 +111,26 @@ app.delete("/books/:id", (req,res)=>{
   db.query(q, [bookId], (err, data) =>{
     if (err) return res.json(err);
     return res.json("book has been deleted succesfully");
-  })
-})
+  });
+});
+
+// update book
+app.put("/books/:id", (req,res)=>{
+  const bookId = req.params.id;
+  const q = "UPDATE books SET `title` = ?, `desc` = ?, `price` = ?, `cover` = ? WHERE id = ?"
+
+  const values =[
+    req.body.title,
+    req.body.desc,
+    req.body.price,
+    req.body.cover,
+  ];
+
+  db.query(q, [...values,bookId], (err, data) =>{
+    if (err) return res.json(err);
+    return res.json("book has been updated succesfully");
+  });
+});
 
 app.listen(8800, () => {
   console.log("Connected to backend! Port: 8800");
