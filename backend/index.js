@@ -36,6 +36,8 @@
 // })
 import express from "express";
 import mysql from "mysql";
+import cors from "cors";
+
 
 // create express application
 const app = express();
@@ -46,6 +48,7 @@ const app = express();
 
 // middleware for accept client input to express server
 app.use(express.json());
+app.use(cors());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
